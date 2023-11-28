@@ -7,6 +7,7 @@ use App\Http\Controllers\ActividadController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReconocimientoController;
 use App\Http\Controllers\CurriculoController;
+use App\Models\Estudiante;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,3 +101,14 @@ Route::get('perfil/{id?}', function ($id = null) {
         return "Visualizar el currículo de " . $id;
     }
 })->where('id', '[0-9]+');
+
+Route::get('pruebaDB', function () {
+    $estudiantes = Estudiante::where('votos','>',100)->firstOrFail();
+    /*
+    $estudiantes = Estudiante::all();
+    foreach( $estudiantes as $estudiante ) {
+        echo $estudiante->nombre . '<br />';
+    }
+    */
+    echo $estudiantes->nombre;
+});

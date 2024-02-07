@@ -59,7 +59,12 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $userData = json_decode($request->getContent(), true);
+        $userData = $request->all();
+        if($userRepoAvatar = $request->file('avatar')) {
+            $path = $userRepoAvatar->store('avatares', ['disk' => 'public']);
+            $userData['avatar'] = $path;
+        }
+
         $user->update($userData);
         return new UserResource($user);
     }
